@@ -70,3 +70,56 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+self.addEventListener('install', event =>  {
+    const preCache = async () => {
+        const cache = await caches.open('static');
+        return cache.addAll([
+            'index.html',
+            '/images/background.jpg',
+            '/images/default_song.png',
+            '/images/profile.jpg',
+            'manifest.json',
+            'robots.txt',
+            'icon-48-48.png',
+            'icon-72-72.png',
+            'icon-96-96.png',
+            'icon-144-144.png',
+            'icon-192-192.png',
+            'icon-512-512.png',
+        ]);
+    };
+
+    event.waitUntil(preCache());
+});
+
+
+self.addEventListener('activate', (event) => {
+    const cacheWhitelist = ['static'];
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            )
+        })
+    )
+});
+
+self.addEventListener('fetch',  event => {
+    event.respondWith(
+        caches.open('dynamic').then(cache => {
+            return cache.match(event.request).then(response => {
+                return response || fetch(event.request).then(response => {
+                    if(event.request.method.toLowerCase() === 'get'){
+                        cache.put(event.request, response.clone());
+                    }
+                    return response;
+                });
+            });
+        })
+    );
+});
