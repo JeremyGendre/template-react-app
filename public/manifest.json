@@ -1,6 +1,9 @@
 {
   "short_name": "Shopping List",
   "name": "Shopping List",
+  "version": "1.0.0",
+  "default_locale": "fr",
+  "description": "Your app to manage your shopping lists",
   "icons": [
     {
       "src": "favicon.ico",
