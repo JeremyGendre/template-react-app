@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import * as firebase from 'firebase/app';
 import {getFirestore} from 'firebase/firestore';
 import firebaseConfig from "./config/firebase";
+import UserContextProvider from "./context/UserContext";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -14,7 +15,9 @@ export const db = getFirestore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <UserContextProvider>
+          <App />
+      </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

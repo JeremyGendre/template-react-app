@@ -1,1 +1,4 @@
-
+.no-decoration-link{
+    text-decoration: none;
+    color: inherit;
+}
