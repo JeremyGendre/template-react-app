@@ -2,6 +2,7 @@ import {useContext, useState} from "react";
 import {UserContext} from "../../context/UserContext";
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
+import {getReadableAuthError} from "../../utils/error";
 
 export default function RegisterPage({onLogin}) {
     const {register} = useContext(UserContext);
@@ -19,7 +20,7 @@ export default function RegisterPage({onLogin}) {
         register(email, password)
             .catch(error => {
                 console.log(error);
-                setError(error.message ?? 'Une erreur est survenue');
+                setError(getReadableAuthError(error));
             }).finally(() => setLoading(false));
     }
 

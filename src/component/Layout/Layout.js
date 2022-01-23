@@ -23,7 +23,7 @@ const drawerWidth = 240;
 
 export default function Layout({ children, window }) {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const {logout} = useContext(UserContext);
+    const {logout, loadingUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleDrawerToggle = () => {
@@ -56,7 +56,7 @@ export default function Layout({ children, window }) {
             </List>
             <Divider />
             <List>
-                <ListItem button key="logout" onClick={logout}>
+                <ListItem button key="logout" disabled={loadingUser} onClick={logout}>
                     <ListItemIcon>
                         <LogoutIcon />
                     </ListItemIcon>

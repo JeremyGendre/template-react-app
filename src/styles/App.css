@@ -65,21 +65,3 @@
     text-decoration: none;
     color: inherit;
 }
-
-/* Specific */
-
-.login-bg:before{
-    content: "";
-    position: absolute;
-    background-image: url(../public/images/login_background.PNG);
-    background-attachment: scroll;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    filter: blur(8px);
-    margin: -100px; /* this will do the trick */
-}

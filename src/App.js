@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import './App.css';
+import './styles/App.css';
+import './styles/login.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {UserContext} from "./context/UserContext";
 import Layout from "./component/Layout/Layout";

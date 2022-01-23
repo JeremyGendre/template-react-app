@@ -1,13 +1,15 @@
 import {createContext, useEffect, useState} from "react";
 import {logInWithEmailAndPassword, registerWithEmailAndPassword, signout, auth} from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import LoadingPage from "../page/LoadingPage";
 
 
 export const UserContext = createContext(null);
 
 export default function UserContextProvider({children}){
     const [user, setUser] = useState(null);
-    const [loadingUser, setLoadingUser] = useState(true);
+    const [loadingUser, setLoadingUser] = useState(false);
+    const [retreivingUser, setRetreivinguser] = useState(true);
 
     const register = (email, password) => {
         setLoadingUser(true);
@@ -39,12 +41,13 @@ export default function UserContextProvider({children}){
             } else { // user signed out
                 setUser(null);
             }
+            setRetreivinguser(false);
         });
     },[])
 
     return (
         <UserContext.Provider value={{user, register, login, logout, loadingUser}}>
-            {children}
+            {retreivingUser ? (<LoadingPage/>) : children}
         </UserContext.Provider>
     );
 }
