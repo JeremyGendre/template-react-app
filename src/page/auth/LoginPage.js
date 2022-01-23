@@ -15,7 +15,11 @@ export default function LoginPage({onRegister}) {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        login();
+        login(email, password)
+            .catch(error => {
+                console.log(error);
+                setError(error.message ?? 'Une erreur est survenue');
+            }).finally(() => setLoading(false));
     }
 
     const isValidForm = !!email && !!password;
