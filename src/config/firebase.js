@@ -8,8 +8,8 @@ import {
 } from "firebase/auth";
 import {
     getFirestore,
-    collection,
-    addDoc,
+    doc,
+    setDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -32,7 +32,7 @@ const logInWithEmailAndPassword = (email, password) => {
 const registerWithEmailAndPassword = async (email, password) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, "users"), {
+    await setDoc(doc(db, "User", user.uid), {
         uid: user.uid,
         email,
     })
