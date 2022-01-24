@@ -6,11 +6,14 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import {auth} from "./config/firebase";
 import UserContextProvider from "./context/UserContext";
+import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
       <UserContextProvider>
-          <App />
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
       </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

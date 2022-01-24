@@ -3,8 +3,9 @@ import {UserContext} from "../../context/UserContext";
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {getReadableAuthError} from "../../utils/error";
+import { Link } from "react-router-dom";
 
-export default function LoginPage({onRegister}) {
+export default function LoginPage() {
     const {login} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
@@ -67,7 +68,7 @@ export default function LoginPage({onRegister}) {
                     </div>
                     {error && <div className="mt-2 error">{error}</div>}
                     <div className="mt-2">
-                        Nouveau ? <a href="#" onClick={onRegister}>Inscription</a>
+                        Nouveau ? <Link to="/auth/register">Inscription</Link>
                     </div>
                 </CardContent>
                 <CardActions className="d-flex justify-center">

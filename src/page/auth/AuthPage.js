@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
+import React, {useContext} from "react";
+import {Navigate, Outlet} from 'react-router-dom';
+import {UserContext} from "../../context/UserContext";
 
 export default function AuthPage(){
-    const [isLoginPage, setIsLoginPage] = useState(true);
+    const {user} = useContext(UserContext);
+
+    if(user){
+        return (<Navigate to="/"/>);
+    }
 
     return (
         <div className="d-flex w-full h-screen">
             <div className="w-full h-full absolute login-bg" style={{overflow: 'hidden'}}/>
-            {isLoginPage ? (
-                <LoginPage onRegister={() => setIsLoginPage(false)}/>
-            ) : (
-                <RegisterPage onLogin={() => setIsLoginPage(true)}/>
-            )}
+            <Outlet/>
         </div>
     )
 }

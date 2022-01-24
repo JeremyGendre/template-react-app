@@ -13,9 +13,9 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, Outlet, Navigate} from "react-router-dom";
 import {UserContext} from "../../context/UserContext";
 import HistoryIcon from '@mui/icons-material/History';
 
@@ -23,8 +23,12 @@ const drawerWidth = 240;
 
 export default function Layout({ children, window }) {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const {logout, loadingUser} = useContext(UserContext);
+    const {user, logout, loadingUser} = useContext(UserContext);
     const navigate = useNavigate();
+
+    if(!user){
+        return (<Navigate to="/auth/login"/>);
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -127,7 +131,7 @@ export default function Layout({ children, window }) {
                 sx={{ flexGrow: 1, p: 2, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                {children}
+                <Outlet/> {/* or {children} */}
             </Box>
         </Box>
     );

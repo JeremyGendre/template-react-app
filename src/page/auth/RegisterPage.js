@@ -3,8 +3,9 @@ import {UserContext} from "../../context/UserContext";
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {getReadableAuthError} from "../../utils/error";
+import { Link } from "react-router-dom";
 
-export default function RegisterPage({onLogin}) {
+export default function RegisterPage() {
     const {register} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
@@ -81,7 +82,7 @@ export default function RegisterPage({onLogin}) {
                     </div>
                     {error && <div className="mt-2 error">{error}</div>}
                     <div className="mt-2">
-                        Déjà inscrit ? <a href="#" onClick={onLogin}>Se connecter</a>
+                        Déjà inscrit ? <Link to="/auth/login">Se connecter</Link>
                     </div>
                 </CardContent>
                 <CardActions className="d-flex justify-center">
