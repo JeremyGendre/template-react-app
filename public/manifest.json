@@ -1,9 +1,9 @@
 {
-  "short_name": "Shopping List",
-  "name": "Shopping List",
+  "short_name": "app name",
+  "name": "app name",
   "version": "1.0.0",
   "default_locale": "fr",
-  "description": "Your app to manage your shopping lists",
+  "description": "Your app desciption",
   "icons": [
     {
       "src": "/icon-48-48.png",

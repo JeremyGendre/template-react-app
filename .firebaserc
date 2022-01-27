@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "shopping-list-f19c0"
+    "default": "firebase-app-name" //TODO Change this
   }
 }
