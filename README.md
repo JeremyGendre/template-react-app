@@ -10,3 +10,5 @@ Don't forget to change config files as :
 - `.firebaserc`
 - `public/index.html`
 - `public/manifest.json`
+
+Don't forget to changes all the images and icons to fit your needs.
