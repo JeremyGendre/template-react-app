@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import './styles/App.css';
 import './styles/login.css';
-import {Routes, Route, Navigate} from "react-router-dom";
-import {UserContext} from "./context/UserContext";
+import {Routes, Route} from "react-router-dom";
 import Layout from "./component/Layout/Layout";
 import AuthPage from "./page/auth/AuthPage";
 import LoginPage from "./page/auth/LoginPage";

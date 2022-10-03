@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Navigate, Outlet} from 'react-router-dom';
-import {UserContext} from "../../context/UserContext";
+import {useUser} from "../../context/UserContext";
 
 export default function AuthPage(){
-    const {user} = useContext(UserContext);
+    const {user} = useUser();
 
     if(user){
         return (<Navigate to="/"/>);

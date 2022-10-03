@@ -1,29 +1,29 @@
-import {useContext, useState} from "react";
-import {UserContext} from "../../context/UserContext";
+import {FormEvent, useState} from "react";
+import {useUser} from "../../context/UserContext";
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {getReadableAuthError} from "../../utils/error";
 import { Link } from "react-router-dom";
 
 export default function RegisterPage() {
-    const {register} = useContext(UserContext);
+    const {register} = useUser();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string|null>(null);
 
-    const handleRegister = (e) => {
+    const handleRegister = (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
         register(email, password)
-            .catch(error => {
+            .catch((error:any) => {
                 console.log(error);
                 setError(getReadableAuthError(error));
             }).finally(() => setLoading(false));
-    }
+    };
 
     const isFormValid = !!email && !!password && !!confirmPassword && password === confirmPassword;
 

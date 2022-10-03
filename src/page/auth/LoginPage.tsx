@@ -1,28 +1,28 @@
-import {useContext, useState} from "react";
-import {UserContext} from "../../context/UserContext";
+import {FormEvent, useState} from "react";
+import {useUser} from "../../context/UserContext";
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {getReadableAuthError} from "../../utils/error";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-    const {login} = useContext(UserContext);
+    const {login} = useUser();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string|null>(null);
 
-    const handleLogin = (e) => {
+    const handleLogin = (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
         login(email, password)
-            .catch(error => {
+            .catch((error:any) => {
                 console.log(error);
                 setError(getReadableAuthError(error));
             }).finally(() => setLoading(false));
-    }
+    };
 
     const isValidForm = !!email && !!password;
 

@@ -13,17 +13,17 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, {useContext, useState} from "react";
+import React, {PropsWithChildren, useContext, useState} from "react";
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import {Link, useNavigate, Outlet, Navigate} from "react-router-dom";
-import {UserContext} from "../../context/UserContext";
+import {useUser} from "../../context/UserContext";
 import HistoryIcon from '@mui/icons-material/History';
 
-const drawerWidth = 240;
+const drawerWidth: number = 240;
 
-export default function Layout({ children, window }) {
+export default function Layout({ children, window }: PropsWithChildren<{window?: Function}>) {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const {user, logout, loadingUser} = useContext(UserContext);
+    const {user, logout, loadingUser} = useUser();
     const navigate = useNavigate();
 
     if(!user){

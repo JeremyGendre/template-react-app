@@ -1,17 +1,26 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, PropsWithChildren, useContext, useEffect, useState} from "react";
 import {logInWithEmailAndPassword, registerWithEmailAndPassword, signout, auth} from "../config/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import {onAuthStateChanged, UserCredential, User} from "firebase/auth";
 import LoadingPage from "../page/LoadingPage";
 
+interface UserContextType{
+    user: User|null,
+    register: (email: string, password: string) => Promise<void>,
+    login: (email: string, password: string) => Promise<void>,
+    logout: () => void,
+    loadingUser: boolean
+}
 
-export const UserContext = createContext(null);
+const UserContext = createContext<UserContextType>(undefined!);
 
-export default function UserContextProvider({children}){
-    const [user, setUser] = useState(null);
+export const useUser = () => useContext(UserContext);
+
+export default function UserContextProvider({children}: PropsWithChildren<{}>){
+    const [user, setUser] = useState<User|null>(null);
     const [loadingUser, setLoadingUser] = useState(false);
     const [retreivingUser, setRetreivinguser] = useState(true);
 
-    const register = (email, password) => {
+    const register = (email: string, password: string) => {
         setLoadingUser(true);
         return registerWithEmailAndPassword(email, password)
             .then(user => {
@@ -19,10 +28,10 @@ export default function UserContextProvider({children}){
             }).finally(() => setLoadingUser(false))
     };
 
-    const login = (email, password) => {
+    const login = (email: string, password: string) => {
         setLoadingUser(true);
         return logInWithEmailAndPassword(email, password)
-            .then((userCredentials) =>  {
+            .then((userCredentials: UserCredential) =>  {
                 setUser(userCredentials.user);
             }).finally(() => setLoadingUser(false))
     };
@@ -43,7 +52,7 @@ export default function UserContextProvider({children}){
             }
             setRetreivinguser(false);
         });
-    },[])
+    },[]);
 
     return (
         <UserContext.Provider value={{user, register, login, logout, loadingUser}}>
