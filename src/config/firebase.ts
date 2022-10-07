@@ -9,10 +9,9 @@ import {
 import {
     getFirestore,
     doc,
-    setDoc,
+    setDoc, getDoc, deleteDoc, updateDoc, QuerySnapshot, DocumentData, DocumentSnapshot, Timestamp, addDoc, collection
 } from "firebase/firestore";
 
-// TODO: change this
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -36,6 +35,8 @@ const registerWithEmailAndPassword = async (email: string, password: string) => 
     await setDoc(doc(db, "User", user.uid), {
         uid: user.uid,
         email,
+        createdAt: Timestamp.now(),
+        updatedAt : Timestamp.now(),
     });
     return user;
 };
@@ -48,6 +49,35 @@ const signout = async () => {
     await signOut(auth);
 };
 
+const buildCollectionFromSnapshot = (snapshot: QuerySnapshot<DocumentData>) => {
+    const newItems:any[] = [];
+    snapshot.forEach((doc) => {
+        newItems.push({uid: doc.id, ...doc.data()});
+    });
+    return newItems;
+};
+
+
+function buildObjectFromSnapshot(snapshot: DocumentSnapshot<DocumentData>) {
+    return {uid: snapshot.id, ...snapshot.data()};
+}
+
+const deleteItem = async (collectionName: string, docId: string) => {
+    return await deleteDoc(doc(db, collectionName, docId));
+};
+
+const updateItem = async (collectionName: string, docId: string, data: object) => {
+    return await updateDoc(doc(db, collectionName, docId), data);
+};
+
+const addItem = async (collectionName: string, data: object) => {
+    return await addDoc(collection(db, collectionName), data);
+};
+
+const getItem = async (collectionName: string, itemId: string) => {
+    return await getDoc(doc(db, collectionName, itemId));
+};
+
 export {
     auth,
     db,
@@ -55,6 +85,12 @@ export {
     registerWithEmailAndPassword,
     sendPasswordReset,
     signout,
+    buildCollectionFromSnapshot,
+    buildObjectFromSnapshot,
+    deleteItem,
+    updateItem,
+    addItem,
+    getItem
 };
 
 export default firebaseConfig;
